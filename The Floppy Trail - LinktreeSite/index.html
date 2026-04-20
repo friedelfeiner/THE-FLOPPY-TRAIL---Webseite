@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Floppy Trail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-font: 'Inconsolata', monospace;
+            --bg-color: #FFFFFF;
+            --panel-bg: #FCF2DE;
+            --text-dark: rgba(0, 0, 0, 0.671);
+            --text-light: rgba(0, 0, 0, 0.431);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--primary-font);
+            background: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        .image-container {
+            flex: 1;
+            background-color: #e0d9cc;
+            /* fallback */
+            background-image:
+                url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20512%20512%22%20width%3D%22512%22%20height%3D%22512%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Cfilter%20id%3D%22noise%22%3E%20%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.875%22%20result%3D%22noise%22%20%2F%3E%20%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220.46875%200%200%200%200%200%200.39453125%200%200%200%200%200%200.25390625%200%200%200%200%200%200.33984375%200%22%20%2F%3E%20%3C%2Ffilter%3E%20%3Crect%20filter%3D%22url%28%23noise%29%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22transparent%22%20opacity%3D%221%22%20%2F%3E%3C%2Fsvg%3E'),
+                url('assets/images/bg-2.jpg');
+            background-size: 512px, cover;
+            background-position: center, center;
+            background-repeat: repeat, no-repeat;
+        }
+
+        .content-wrapper {
+            width: 36vw;
+            min-width: 480px;
+            max-width: 600px;
+            background-color: var(--panel-bg);
+            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201024%201024%22%20width%3D%221024%22%20height%3D%221024%22%20preserveAspectRatio%3D%22none%22%3E%20%3Cstyle%3E%20rect%20%7B%20fill%3A%20rgba(0,0,0,0.051)%3B%20transform-origin%3A%2050%25%2050%25%3B%20transform%3A%20translateX%28-25%25%29%20translateY%28-25%25%29%3B%20%7D%20%3C%2Fstyle%3E%20%3Crect%20x%3D%22256%22%20y%3D%22256%22%20width%3D%225.01%25%22%20height%3D%225.01%25%22%20%2F%3E%20%3Crect%20x%3D%22768%22%20y%3D%22768%22%20width%3D%225.01%25%22%20height%3D%225.01%25%22%20%2F%3E%3C%2Fsvg%3E');
+            background-size: 93px;
+            background-position: center;
+            background-repeat: repeat;
+            box-shadow: 0rem 1.75rem 7.625rem 0rem rgba(0, 0, 0, 0.078);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            z-index: 10;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2.625rem;
+            color: var(--text-dark);
+            font-weight: 400;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1.5rem;
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%20512%20512%22%20preserveAspectRatio%3D%22none%22%3E%3Cstyle%3Epath%20%7Bfill%3A%20none%3Bstroke-width%3A%201.5px%3Bstroke%3A%20rgba(0,0,0,0.212)%3Bstroke-linecap%3Around%3Bvector-effect%3A%20non-scaling-stroke%3B%7D%3C%2Fstyle%3E%3Cpath%20d%3D%22M-8%2C400l264-288%20M520%2C400L256%2C112%22%20%2F%3E%3C%2Fsvg%3E");
+            background-size: auto 62.6%;
+            background-position: center center;
+            background-repeat: repeat-x;
+            margin: 0.5rem 0;
+        }
+
+        ul.links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+            list-style: none;
+        }
+
+        ul.links a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 500;
+            border-radius: 0.75rem;
+            padding: 0.85rem 1.5rem;
+            color: var(--text-light);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            line-height: 1.2;
+        }
+
+        ul.links a:hover {
+            transform: scale(1.04) translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        ul.links a span {
+            flex-grow: 1;
+        }
+
+        ul.links a svg {
+            width: 1.875rem;
+            height: 1.875rem;
+            fill: var(--text-light);
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+
+        .link-insta {
+            background-color: #FFC369;
+        }
+
+        .link-fb {
+            background-color: #F7955E;
+        }
+
+        .link-yt {
+            background-color: #FF7A7A;
+        }
+
+        .link-coffee {
+            background-color: #FC6D8F;
+        }
+
+        .link-email {
+            background-color: #A67EE6;
+        }
+
+        ul.icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        ul.icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        ul.icons a:hover {
+            transform: scale(1.2) translateY(-2px);
+        }
+
+        ul.icons svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--text-light);
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated {
+            opacity: 0;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        h1.animated {
+            animation-delay: 0.1s;
+        }
+
+        p.animated {
+            animation-delay: 0.2s;
+        }
+
+        .div-1.animated {
+            animation-delay: 0.3s;
+        }
+
+        .links li:nth-child(1).animated {
+            animation-delay: 0.4s;
+        }
+
+        .links li:nth-child(2).animated {
+            animation-delay: 0.45s;
+        }
+
+        .links li:nth-child(3).animated {
+            animation-delay: 0.5s;
+        }
+
+        .links li:nth-child(4).animated {
+            animation-delay: 0.55s;
+        }
+
+        .links li:nth-child(5).animated {
+            animation-delay: 0.6s;
+        }
+
+        .div-2.animated {
+            animation-delay: 0.7s;
+        }
+
+        ul.icons li.animated {
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        ul.icons li:nth-child(1).animated {
+            animation-delay: 0.75s;
+        }
+
+        ul.icons li:nth-child(2).animated {
+            animation-delay: 0.8s;
+        }
+
+        ul.icons li:nth-child(3).animated {
+            animation-delay: 0.85s;
+        }
+
+        /* Responsive */
+        @media (max-width: 980px) {
+            body {
+                flex-direction: column;
+            }
+
+            .image-container {
+                height: 45vh;
+                min-height: 250px;
+                flex: none;
+            }
+
+            .content-wrapper {
+                width: 100%;
+                min-width: unset;
+                max-width: none;
+                padding: 3rem 2rem;
+                box-shadow: none;
+            }
+
+            h1 {
+                font-size: 2.375rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40"
+        display="none" width="0" height="0">
+        <symbol id="icon-85976685de3e4af37529a1ce5d57d2a7" viewBox="0 0 40 40">
+            <path
+                d="M20,7c4.2,0,4.7,0,6.3,0.1c1.5,0.1,2.3,0.3,3,0.5C30,8,30.5,8.3,31.1,8.9c0.5,0.5,0.9,1.1,1.2,1.8c0.2,0.5,0.5,1.4,0.5,3 C33,15.3,33,15.8,33,20s0,4.7-0.1,6.3c-0.1,1.5-0.3,2.3-0.5,3c-0.3,0.7-0.6,1.2-1.2,1.8c-0.5,0.5-1.1,0.9-1.8,1.2 c-0.5,0.2-1.4,0.5-3,0.5C24.7,33,24.2,33,20,33s-4.7,0-6.3-0.1c-1.5-0.1-2.3-0.3-3-0.5C10,32,9.5,31.7,8.9,31.1 C8.4,30.6,8,30,7.7,29.3c-0.2-0.5-0.5-1.4-0.5-3C7,24.7,7,24.2,7,20s0-4.7,0.1-6.3c0.1-1.5,0.3-2.3,0.5-3C8,10,8.3,9.5,8.9,8.9 C9.4,8.4,10,8,10.7,7.7c0.5-0.2,1.4-0.5,3-0.5C15.3,7.1,15.8,7,20,7z M20,4.3c-4.3,0-4.8,0-6.5,0.1c-1.6,0-2.8,0.3-3.8,0.7 C8.7,5.5,7.8,6,6.9,6.9C6,7.8,5.5,8.7,5.1,9.7c-0.4,1-0.6,2.1-0.7,3.8c-0.1,1.7-0.1,2.2-0.1,6.5s0,4.8,0.1,6.5 c0,1.6,0.3,2.8,0.7,3.8c0.4,1,0.9,1.9,1.8,2.8c0.9,0.9,1.7,1.4,2.8,1.8c1,0.4,2.1,0.6,3.8,0.7c1.6,0.1,2.2,0.1,6.5,0.1 s4.8,0,6.5-0.1c1.6-0.1,2.9-0.3,3.8-0.7c1-0.4,1.9-0.9,2.8-1.8c0.9-0.9,1.4-1.7,1.8-2.8c0.4-1,0.6-2.1,0.7-3.8 c0.1-1.6,0.1-2.2,0.1-6.5s0-4.8-0.1-6.5c-0.1-1.6-0.3-2.9-0.7-3.8c-0.4-1-0.9-1.9-1.8-2.8c-0.9-0.9-1.7-1.4-2.8-1.8 c-1-0.4-2.1-0.6-3.8-0.7C24.8,4.3,24.3,4.3,20,4.3L20,4.3L20,4.3z" />
+            <path
+                d="M20,11.9c-4.5,0-8.1,3.7-8.1,8.1s3.7,8.1,8.1,8.1s8.1-3.7,8.1-8.1S24.5,11.9,20,11.9z M20,25.2c-2.9,0-5.2-2.3-5.2-5.2 s2.3-5.2,5.2-5.2s5.2,2.3,5.2,5.2S22.9,25.2,20,25.2z" />
+            <path
+                d="M30.6,11.6c0,1-0.8,1.9-1.9,1.9c-1,0-1.9-0.8-1.9-1.9s0.8-1.9,1.9-1.9C29.8,9.7,30.6,10.5,30.6,11.6z" />
+        </symbol>
+        <symbol id="icon-facebook" viewBox="0 0 40 40">
+            <path d="M27.8 25.6l.9-5.6h-5.3v-3.9c0-1.6.6-2.8 3-2.8H29V8.2c-1.4-.2-3-.4-4.4-.4-4.6 0-7.8 2.8-7.8 7.8V20h-5v5.6h5v14.1c1.1.2 2.2.3 3.3.3 1.1 0 2.2-.1 3.3-.3V25.6h4.4z" />
+        </symbol>
+        <symbol id="icon-youtube" viewBox="0 0 40 40">
+            <path fill-rule="evenodd" d="M38.5,12.5c-0.4-1.7-1.8-3.1-3.5-3.5C31.9,8.1,20,8.1,20,8.1s-11.9,0-15,0.9c-1.7,0.4-3.1,1.8-3.5,3.5 C0.6,15.6,0.6,20,0.6,20s0,4.4,0.9,7.5c0.4,1.7,1.8,3.1,3.5,3.5c3.1,0.9,15,0.9,15,0.9s11.9,0,15-0.9c1.7-0.4,3.1-1.8,3.5-3.5 C39.4,24.4,39.4,20,39.4,20S39.4,15.6,38.5,12.5z M16,26l9-6l-9-6V26z" />
+        </symbol>
+        <symbol id="icon-e9633646f45121eab610a3d30c929019" viewBox="0 0 40 40">
+            <path
+                d="M24.9,21.9c0.2,0,0.9,0.3,2.1,1c1.2,0.6,1.9,1,1.9,1.1c0,0.1,0,0.2,0,0.3c0,0.5-0.1,1-0.4,1.6c-0.2,0.6-0.7,1-1.5,1.4 s-1.5,0.6-2.2,0.6c-0.8,0-2.2-0.4-4.1-1.3c-1.4-0.7-2.6-1.5-3.7-2.6c-1-1.1-2.1-2.4-3.2-4c-1-1.5-1.6-3-1.5-4.2v-0.2 c0-1.3,0.6-2.5,1.6-3.4c0.3-0.3,0.7-0.5,1.1-0.5c0.1,0,0.2,0,0.4,0c0.2,0,0.3,0,0.4,0c0.3,0,0.5,0,0.6,0.1c0.1,0.1,0.2,0.3,0.3,0.6 c0.1,0.3,0.4,0.9,0.7,1.9S18,16,18,16.1c0,0.3-0.2,0.7-0.7,1.2c-0.5,0.5-0.7,0.9-0.7,1c0,0.1,0,0.2,0.1,0.3c0.5,1.1,1.2,2,2.2,3 c0.8,0.8,1.9,1.5,3.3,2.2c0.2,0.1,0.3,0.2,0.5,0.2c0.2,0,0.6-0.4,1.2-1.1S24.7,21.9,24.9,21.9L24.9,21.9z M20.5,33.4 c1.8,0,3.6-0.4,5.3-1.1c1.7-0.7,3.1-1.7,4.4-2.9c1.2-1.2,2.2-2.7,2.9-4.4c0.7-1.7,1.1-3.4,1.1-5.3c0-1.8-0.4-3.6-1.1-5.3 c-0.7-1.7-1.7-3.1-2.9-4.4s-2.7-2.2-4.4-2.9s-3.4-1.1-5.3-1.1c-1.8,0-3.6,0.4-5.3,1.1s-3.1,1.7-4.4,2.9c-1.2,1.2-2.2,2.7-2.9,4.4 c-0.7,1.7-1.1,3.4-1.1,5.3c0,2.9,0.9,5.6,2.6,8l-1.7,5.1l5.3-1.7C15.3,32.6,17.8,33.4,20.5,33.4z M20.5,3.4c2.2,0,4.3,0.4,6.3,1.3 s3.8,2,5.2,3.5c1.5,1.5,2.6,3.2,3.5,5.2c0.9,2,1.3,4.1,1.3,6.3c0,2.2-0.4,4.3-1.3,6.3s-2,3.8-3.5,5.2c-1.5,1.5-3.2,2.6-5.2,3.5 s-4.1,1.3-6.3,1.3c-2.8,0-5.5-0.7-7.9-2L3.5,37l3-8.8c-1.6-2.6-2.3-5.4-2.3-8.4c0-2.2,0.4-4.3,1.3-6.3s2-3.8,3.5-5.2 s3.2-2.6,5.2-3.5S18.2,3.4,20.5,3.4z" />
+        </symbol>
+        <symbol id="icon-56536b3c1f1e12487f25a3d2acbe79e5" viewBox="0 0 40 40">
+            <path
+                d="M19.6,36.7C19.6,36.7,19.6,36.7,19.6,36.7C19.6,36.7,19.6,36.7,19.6,36.7 L19.6,36.7z M15.5,35.7c-0.5-0.4-0.7-1-0.8-1.6l-1.4-14.6c0.8,0.2,1.7,0.3,2.6,0.4c2.1,0,3.7-0.7,5.1-1.3c1.3-0.5,2.3-1,3.7-1 c0.8,0,1.5,0.2,2.1,0.4l-1.5,16.2c-0.1,0.6-0.3,1.2-0.8,1.6c-0.5,0.4-1,0.6-1.7,0.6c0,0-2.2,0.1-2.9,0.1c-0.7,0-2.7-0.1-2.7-0.1 C16.6,36.3,16,36.1,15.5,35.7z M32.7,13.8c-0.5,0.5-1.1,0.7-1.7,0.8c-0.2,0-0.3,0.1-0.4,0.2c-0.1,0.1-0.2,0.3-0.2,0.5L30,18.7 l-0.8,7.4c-0.2,2.3-0.5,4.5-0.7,6.8c-0.1,0.7-0.1,1.4-0.2,2.1c-0.2,2.4-2,3.9-4.3,4.3c-1.5,0.3-3.1,0.2-4.7,0.2 c-1.2,0-2.5-0.1-3.7-0.3c-2.1-0.3-3.7-1.5-4-3.7c0-0.4-0.1-0.8-0.1-1.2c-0.2-2.1-0.4-4.2-0.7-6.3l-0.8-7.3l-0.4-3.6 c-0.1-0.6,0.6-1.1,1.1-1.1c0.6,0,1,0.5,1.1,1.1c0,0.1,0,0.2,0,0.2l0.5,4.8l0.8,7.4c0.1,1.3,0.3,2.7,0.4,4c0.1,1,0.2,2.2,1,2.9 c0.9,0.8,2.3,1,3.4,0.9c1.1,0,2.1,0,3.2,0c1,0,1.9-0.1,2.9-0.3c1-0.2,1.7-0.9,1.9-1.9c0.1-0.7,0.1-1.3,0.2-2c0.1-0.7,0.1-1.4,0.2-2 c0.2-2.4,0.5-4.8,0.7-7.2c0.2-2.3,0.5-4.6,0.7-6.9l0.1-1.1c0-0.1,0-0.2,0-0.3c0-0.1-0.1-0.2-0.2-0.3c-0.1-0.1-0.2-0.1-0.3-0.2 c-0.1,0-0.2-0.1-0.3,0c-0.4,0-0.7,0.1-1.1,0.1c-4.6,0.4-9.2,0.4-13.8-0.2c-1.2-0.1-2.3-0.3-3.5-0.5c-1.2-0.2-2.1-1.2-2.2-2.4 c-0.1-0.6,0.1-1.2,0.2-1.7c0.1-0.6,0.2-1.1,0.4-1.6c0.2-0.5,0.6-0.9,1.1-1.1c0.6-0.3,1.2-0.4,1.8-0.3c0.5,0.1,1.1,0.2,1.6,0.3 c0.2,0,0.3,0,0.5,0.1c0,0,0.2,0,0.3,0c0.2,0,0.5,0.1,0.7,0.1c2.3,0.3,4.6,0.4,6.9,0.4c0.6,0,1.2,0,1.7,0c1.1,0,2.3-0.1,3.4-0.2 c0.6,0,1.1-0.1,1.7-0.2c0.3,0,0.6-0.1,0.9-0.1l0.1,0l0.1,0h0c0.1,0,0.1,0,0.1-0.1c0,0,0.1-0.1,0.1-0.1c0,0,0.1-0.1,0.1-0.1 c0-0.1,0-0.1,0-0.2c-0.2-0.7-0.3-1.4-0.5-2.1c0,0,0,0,0,0l-0.1-0.3c0-0.2-0.1-0.5-0.2-0.7c-0.3-0.7-1.1-0.7-1.7-0.9 c-0.4-0.1-0.9-0.2-1.3-0.2l-0.1,0c-0.1,0-0.1,0-0.2,0c-0.2,0-0.4,0-0.6-0.1c-0.9-0.1-1.8-0.1-2.7-0.2c-1.9-0.1-3.7,0-5.6,0.2 C15.1,3,14.8,3,14.6,3h0c-0.1,0-0.2,0-0.3,0.1c-0.3,0.1-0.7,0.1-1,0.2h0c0,0-0.1,0-0.1,0.1c0,0,0,0.1,0,0.1c0,0,0,0.1,0,0.1 c0,0,0.1,0.1,0.1,0.1c0.4,0.1,0.8,0.2,1.2,0.2l0.2,0l0,0l0.2,0c0.2,0,0.4,0,0.6,0.1C15.9,4,16.3,4,16.7,4c0.9,0.1,1.9,0.1,2.9,0.1 c1,0,1.9,0,2.9-0.1c0.4,0,0.9-0.1,1.3-0.1c0.2,0,0.4,0,0.6-0.1l0.1,0c0.1,0,0.2,0,0.3,0c0.6-0.1,1.2,0.1,1.4,0.8 c0.2,0.5-0.2,1.3-0.8,1.4c-0.5,0.1-1,0.1-1.5,0.2c-2,0.2-4,0.3-5.9,0.2c-1.8-0.1-3.6-0.2-5.3-0.6c-0.6-0.1-1.2-0.3-1.8-0.6 c-0.5-0.2-0.9-0.5-1.1-0.9C9.3,3.5,9.4,2.8,9.9,2.3c0.4-0.4,0.9-0.6,1.4-0.8c1.4-0.5,3-0.7,4.5-0.8c2-0.2,4-0.2,6-0.1 c1.7,0.1,3.4,0.2,5,0.7c0.3,0.1,0.7,0.2,1,0.3c0.7,0.3,1.3,0.6,1.6,1.3c0.2,0.5,0.3,1.1,0.4,1.6c0.1,0.6,0.2,1.2,0.3,1.8 c0.1,0.3,0.1,0.7,0.4,0.9c0.2,0.2,0.6,0.3,0.9,0.4c1,0.4,1.4,1.3,1.6,2.2l0.2,1.1C33.6,12,33.5,13,32.7,13.8z M9,12.3 C9,12.3,9,12.3,9,12.3L9,12.3C9,12.3,9,12.3,9,12.3z M31,10c-0.4-0.7-1.1-0.5-1.8-0.3C28.5,9.8,27.8,9.9,27,10 c-4,0.5-8.1,0.6-12.2,0.2C13.9,10.2,13,10,12,9.9c-0.8-0.1-1.7-0.5-2.5-0.4c-0.5,0.1-0.7,0.6-0.8,1c-0.1,0.3-0.2,0.8-0.1,1.2 c0,0,0,0,0,0c0,0,0,0,0,0c0,0.2,0.1,0.3,0.2,0.4c0.2,0.2,0.5,0.3,0.8,0.3c2.8,0.4,5.6,0.7,8.5,0.8c4,0.1,8-0.2,11.9-0.7 c0.4-0.1,0.7-0.2,0.9-0.4c0.2-0.2,0.3-0.4,0.3-0.6C31.3,11.1,31.2,10.5,31,10z M8.7,11.8C8.7,11.8,8.7,11.8,8.7,11.8 c0,0,0-0.1,0-0.1C8.7,11.7,8.7,11.7,8.7,11.8z" />
+        </symbol>
+        <symbol id="icon-c0646d28bbeb18e39eb973f96b44bd0f" viewBox="0 0 40 40">
+            <path
+                d="M38,13.8v16.8c0,1.4-1.1,2.5-2.5,2.5H4.5c-1.4,0-2.5-1.1-2.5-2.5V13.8h0v-3.4c0-1.4,1.1-2.5,2.5-2.5h31c1.4,0,2.5,1.1,2.5,2.5v3.4h0ZM4.5,30.8h31c0,0,.2,0,.2-.2v-14.6l-15,10.2c-.2.1-.4.2-.7.2s-.5,0-.7-.2L4.4,16v14.6c0,0,0,.2.2.2ZM35.5,10.2H4.5c0,0-.2,0-.2.2v2.7l15.6,10.6,15.6-10.6v-2.7c0,0,0-.2-.2-.2Z" />
+        </symbol>
+        <symbol id="icon-9570a68733e3ff2abd643efda8a53b3c" viewBox="0 0 40 40">
+            <path
+                d="M25.9,38.5h-11.8c-2.8,0-5-2.2-5-5V6.5c0-2.8,2.2-5,5-5h11.8c2.8,0,5,2.2,5,5v27c0,2.8-2.2,5-5,5ZM28.5,6.5c0-1.4-1.2-2.6-2.6-2.6h-11.8c-1.4,0-2.6,1.2-2.6,2.6v27c0,1.4,1.2,2.6,2.6,2.6h11.8c1.4,0,2.6-1.2,2.6-2.6V6.5ZM23.5,8.3h-6.9c-.5,0-.9-.4-.9-.9s.4-.9.9-.9h6.9c.5,0,.9.4.9.9s-.4.9-.9.9Z" />
+        </symbol>
+        <symbol id="icon-3dc53231f6592396154e494d0058130c" viewBox="0 0 40 40">
+            <path
+                d="M33.1,9.4c1.3,0,1.6.3,1.6,1.6v15.5c0,1.9-.5,2.4-2.4,2.4h-12.6c-.7,0-1.4.3-1.8.9l-3.7,4.8v-3.4c0-1.2-1-2.2-2.2-2.2h-4.4c-1.9,0-2.4-.5-2.4-2.4v-15.5c0-.8,0-1.6,2.4-1.6h25.5M33.1,7.2H7.6c-3.1,0-4.6,1.3-4.6,3.9v15.5c0,3.1,1.5,4.6,4.6,4.6h4.4v5.4c0,.8,0,1.4.4,1.9.3.2.6.3.8.3.4,0,.7-.2,1-.7l5.4-7h12.6c3.1,0,4.6-1.5,4.6-4.6v-15.5c0-2.6-1.3-3.9-3.9-3.9h0Z" />
+        </symbol>
+    </svg>
+
+    <div class="image-container"></div>
+    <div class="content-wrapper">
+        <div class="content">
+            <h1 class="animated">The Floppy Trail</h1>
+            <p class="animated">Ich poste Stories von meinen Wegen bei @friedelfeiner, hier interpretiert KI komplett automatisiert meine realen Erlebnisse… 😎🤙</p>
+
+            <div class="divider div-1 animated"></div>
+
+            <ul class="links">
+                <li class="animated"><a href="https://www.instagram.com/floppytrail/" target="_blank"
+                        class="link-insta"><span>Follow me on Instagram</span><svg>
+                            <use href="#icon-85976685de3e4af37529a1ce5d57d2a7"></use>
+                        </svg></a></li>
+                <li class="animated"><a href="https://www.facebook.com/profile.php?id=61572126057728&sk=reels_tab" target="_blank"
+                        class="link-fb"><span>Follow me on Facebook</span><svg>
+                            <use href="#icon-facebook"></use>
+                        </svg></a></li>
+                <li class="animated"><a href="https://www.youtube.com/@floppytrail" target="_blank"
+                        class="link-yt"><span>Follow me on YouTube</span><svg>
+                            <use href="#icon-youtube"></use>
+                        </svg></a></li>
+                <li class="animated"><a href="https://buy.stripe.com/00w6oGaaP6rk8Lrgzk73G05" class="link-coffee"><span>Buy me a Cappuchino</span><svg>
+                            <use href="#icon-56536b3c1f1e12487f25a3d2acbe79e5"></use>
+                        </svg></a></li>
+                <li class="animated"><a href="https://buy.stripe.com/6oUeVc96LbLE9PvaaW73G06" class="link-email"><span>Postkarten aus Italien</span><svg>
+                            <use href="#icon-c0646d28bbeb18e39eb973f96b44bd0f"></use>
+                        </svg></a></li>
+            </ul>
+
+            <div class="divider div-2 animated"></div>
+
+            <ul class="icons">
+                <li class="animated"><a href="sms:+491795135658"><svg>
+                            <use href="#icon-3dc53231f6592396154e494d0058130c"></use>
+                        </svg></a></li>
+                <li class="animated"><a href="mailto:hello@thefloppytrail.com"><svg>
+                            <use href="#icon-c0646d28bbeb18e39eb973f96b44bd0f"></use>
+                        </svg></a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
